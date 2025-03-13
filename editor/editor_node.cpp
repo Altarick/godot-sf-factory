@@ -1017,7 +1017,7 @@ void EditorNode::_fs_changed() {
 	String export_error;
 	Error err = OK;
 	// It's important to wait for the first scan to finish; otherwise, scripts or resources might not be imported.
-	if (!EditorFileSystem::get_singleton()->is_scanning()) {
+	if (!EditorFileSystem::get_singleton()->is_scanning() && (export_defer.export_all || !export_defer.preset.is_empty() )) {
 
 		if(export_defer.export_all)
 		{

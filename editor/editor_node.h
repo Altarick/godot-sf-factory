@@ -242,7 +242,7 @@ private:
 		bool android_build_template = false;
 		bool patch = false;
 		Vector<String> patches;
-		bool export_all;
+		bool export_all = false;
 	} export_defer;
 
 	static EditorNode *singleton;
