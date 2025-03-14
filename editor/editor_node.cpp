@@ -1006,10 +1006,8 @@ void EditorNode::_fs_changed() {
 	String export_error;
 	Error err = OK;
 	// It's important to wait for the first scan to finish; otherwise, scripts or resources might not be imported.
-	if (!EditorFileSystem::get_singleton()->is_scanning() && (export_defer.export_all || !export_defer.preset.is_empty() )) {
-
-		if(export_defer.export_all)
-		{
+	if (!EditorFileSystem::get_singleton()->is_scanning() && (export_defer.export_all || !export_defer.preset.is_empty())) {
+		if (export_defer.export_all) {
 			for (int i = 0; i < EditorExport::get_singleton()->get_export_preset_count(); i++) {
 				Ref<EditorExportPreset> preset = EditorExport::get_singleton()->get_export_preset(i);
 				if (preset.is_null()) {
@@ -1034,9 +1032,7 @@ void EditorNode::_fs_changed() {
 					break;
 				}
 			}
-		} 
-		else if (!export_defer.preset.is_empty())
-		{
+		} else if (!export_defer.preset.is_empty()) {
 			String preset_name = export_defer.preset;
 			// Ensures export_project does not loop infinitely, because notifications may
 			// come during the export.
@@ -1066,8 +1062,6 @@ void EditorNode::_fs_changed() {
 					export_error = "This project doesn't have an `export_presets.cfg` file at its root.\nCreate an export preset from the \"Project > Export\" dialog and try again.";
 				}
 			} else {
-				
-			
 				Ref<EditorExportPlatform> platform = export_preset->get_platform();
 				const String export_path = export_defer.path.is_empty() ? export_preset->get_export_path() : export_defer.path;
 				if (export_path.is_empty()) {
@@ -1115,7 +1109,6 @@ void EditorNode::_fs_changed() {
 						export_error = vformat("Project export for preset \"%s\" completed with warnings.", preset_name);
 					}
 				}
-				
 			}
 		}
 		if (err != OK) {
