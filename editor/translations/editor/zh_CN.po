@@ -103,13 +103,16 @@
 # J_aphasiac <japhasiac@163.com>, 2025.
 # BuddhaGrape <3248882725@qq.com>, 2025.
 # ChenLei <falsecollector@outlook.com>, 2025.
+# Myeongjin Lee <aranet100@gmail.com>, 2025.
+# Jianwen Xu <jianwen-xu@users.noreply.hosted.weblate.org>, 2025.
+# bocai-bca <c3204835842@icloud.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Chinese (Simplified) (Godot Engine)\n"
 "Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
 "POT-Creation-Date: 2018-01-20 12:15+0200\n"
-"PO-Revision-Date: 2025-03-07 02:01+0000\n"
-"Last-Translator: Haoyu Qiu <timothyqiu32@gmail.com>\n"
+"PO-Revision-Date: 2025-06-05 16:43+0000\n"
+"Last-Translator: bocai-bca <c3204835842@icloud.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/godot-engine/godot/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -117,7 +120,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.3-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 msgid "Main Thread"
 msgstr "主线程"
@@ -963,6 +966,9 @@ msgstr "AnimationPlayer 不能动画化自己，只可动画化其他 Player。"
 
 msgid "property '%s'"
 msgstr "属性“%s”"
+
+msgid "Nearest FPS: %d"
+msgstr "邻近 FPS：%d"
 
 msgid "Change Animation Step"
 msgstr "修改动画步长"
@@ -2716,7 +2722,7 @@ msgid "Focus on the %s dock."
 msgstr "聚焦 %s 面板。"
 
 msgid "%s - Godot Engine"
-msgstr "%s - Godot Engine"
+msgstr "%s - Godot 引擎"
 
 msgid "Move this dock right one tab."
 msgstr "将该面板向右移一个选项卡。"
@@ -3555,6 +3561,24 @@ msgstr "切换编辑器消息的可见性。"
 msgid "Native Shader Source Inspector"
 msgstr "原生着色器源检查器"
 
+msgid ""
+"The Android build template is already installed in this project and it won't "
+"be overwritten.\n"
+"Remove the \"%s\" directory manually before attempting this operation again."
+msgstr ""
+"该项目已安装 Android 构建模板，不会进行覆盖。\n"
+"前先请手动移除“%s”目录然后再尝试本操作。"
+
+msgid ""
+"This will set up your project for gradle Android builds by installing the "
+"source template to \"%s\".\n"
+"Note that in order to make gradle builds instead of using pre-built APKs, the "
+"\"Use Gradle Build\" option should be enabled in the Android export preset."
+msgstr ""
+"本操作会为你的项目建立基于 Gradle 的 Android 构建，在“%s”安装源码模板。\n"
+"请注意，要使用 Gradle 构建代替使用预制 APK，应在 Android 导出预设中启用“使用 "
+"Gradle 构建”选项。"
+
 msgid "Unnamed Project"
 msgstr "未命名项目"
 
@@ -3669,7 +3693,7 @@ msgid "Can't load MeshLibrary for merging!"
 msgstr "无法加载要合并的 MeshLibrary！"
 
 msgid "Error saving MeshLibrary!"
-msgstr "保存网格库出错！"
+msgstr "保存 MeshLibrary 出错！"
 
 msgid ""
 "An error occurred while trying to save the editor layout.\n"
@@ -4834,7 +4858,7 @@ msgid "Storing File: %s"
 msgstr "保存文件：%s"
 
 msgid "Storing File:"
-msgstr "保存文件："
+msgstr "正在保存文件："
 
 msgid "No export template found at the expected path:"
 msgstr "指定路径不存在导出模板："
@@ -5119,6 +5143,9 @@ msgstr "从文件安装"
 
 msgid "Install templates from a local file."
 msgstr "从本地文件安装模板。"
+
+msgid "Online mode is needed to download the templates."
+msgstr "下载模板需要在线模式。"
 
 msgid "Go Online"
 msgstr "连接网络"
@@ -5482,7 +5509,7 @@ msgid ""
 msgstr ""
 "编辑器无法识别该文件扩展名。\n"
 "如果你仍要重命名，请使用操作系统的文件管理器。\n"
-"在重命名为未知扩展名后，改文件不会再在编辑器中显示。"
+"在重命名为未知扩展名后，该文件不会再在编辑器中显示。"
 
 msgid "A file or folder with this name already exists."
 msgstr "已经存在同名的文件或文件夹。"
@@ -7881,7 +7908,7 @@ msgid "Preview"
 msgstr "预览"
 
 msgid "Configure Snap"
-msgstr "设置吸附"
+msgstr "配置吸附"
 
 msgid "Grid Offset:"
 msgstr "栅格偏移："
@@ -10812,7 +10839,7 @@ msgid "Open '%s' in Godot online documentation."
 msgstr "在 Godot 在线文档中打开“%s”。"
 
 msgid "Open in Online Docs"
-msgstr "打开在线文档"
+msgstr "在线文档中打开"
 
 msgid "Online Docs"
 msgstr "在线文档"
@@ -14327,6 +14354,9 @@ msgid ""
 "single output port."
 msgstr "任意调整连接路线，可以将多个输入端口连接到单个输出端口。"
 
+msgid "[None]"
+msgstr "[无]"
+
 msgid "Edit Visual Property: %s"
 msgstr "编辑可视属性：%s"
 
@@ -15796,6 +15826,21 @@ msgstr "重启并升级"
 
 msgid "Updating Script UIDs"
 msgstr "正在更新脚本 UID"
+
+msgid ""
+"As of Godot 4.4, scenes and resources use UIDs to reference scripts and "
+"shaders. Upgrades apply on the next save of each scene/resource.\n"
+"\n"
+"To save time, this tool can open and save each of these files. Depending on "
+"the project size, it may take several minutes."
+msgstr ""
+"截至 Godot 4.4，场景和资源使用 UID 来引用脚本和着色器。升级将在各个场景/资源下"
+"次保存时应用。\n"
+"\n"
+"为了节省时间，该工具可以打开并保存每个文件。根据项目的大小，这可能需要几分钟。"
+
+msgid "Re-save all scenes and resources to use UIDs"
+msgstr "使用 UID 重新保存所有场景和资源"
 
 msgid "Learn More"
 msgstr "了解更多"
@@ -18093,8 +18138,8 @@ msgid ""
 "the Bake Occluders button at the top of the 3D editor viewport."
 msgstr ""
 "遮挡网格的顶点少于 3 个，所以使用这个 OccluderInstance3D 不会进行遮挡剔除。\n"
-"要生成正确的遮挡网格，请选择 OccluderInstance3D，然后使用 3D 编辑器视口顶部"
-"的“烘焙遮挡器”按钮。"
+"要生成正确的遮挡网格，请选择 OccluderInstance3D，然后使用 3D 编辑器视口顶部的"
+"“烘焙遮挡器”按钮。"
 
 msgid ""
 "The polygon occluder has less than 3 vertices, so no occlusion culling will "
@@ -18383,7 +18428,7 @@ msgid ""
 msgstr "ButtonGroup 的目的是只用于那些将 toggle_mode 设置为 true 的按钮。"
 
 msgid "Copy this constructor in a script."
-msgstr "复制这个脚本中的构造函数。"
+msgstr "复制脚本中的构造函数。"
 
 msgid "Load Color Palette"
 msgstr "加载调色板"
@@ -19292,8 +19337,8 @@ msgid ""
 "You are attempting to assign the VERTEX position in model space to the vertex "
 "POSITION in clip space. The definition of clip space changed in version 4.3, "
 "so if this code was written prior to 4.3, it will not continue to work. "
-"Consider specifying the clip space z-component directly i.e. use `vec4(VERTEX."
-"xy, 1.0, 1.0)`."
+"Consider specifying the clip space z-component directly i.e. use "
+"`vec4(VERTEX.xy, 1.0, 1.0)`."
 msgstr ""
 "正在尝试将模型空间的顶点位置 VERTEX 赋值给裁剪空间的顶点位置 POSITION。4.3 版"
 "本修改了裁剪空间的定义，因此如果这段代码是在 4.3 之前编写的，就会无法继续工"
