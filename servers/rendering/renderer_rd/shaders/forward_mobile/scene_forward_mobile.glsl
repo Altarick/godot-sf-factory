@@ -1571,6 +1571,7 @@ void main() {
 	hvec3 direct_specular_light = hvec3(0.0);
 	hvec3 diffuse_light = hvec3(0.0);
 	hvec3 ambient_light = hvec3(0.0);
+	hvec3 ambient_light_resulting = hvec3(0.0);
 
 #ifndef MODE_UNSHADED
 	// Used in regular draw pass and when drawing SDFs for SDFGI and materials for VoxelGI.
@@ -1838,7 +1839,7 @@ void main() {
 	indirect_specular_light *= specular_occlusion;
 #endif // BENT_NORMAL_MAP_USED
 #endif // USE_SPECULAR_OCCLUSION
-	ambient_light *= albedo.rgb;
+	ambient_light_resulting = ambient_light * albedo.rgb;
 
 #endif // !AMBIENT_LIGHT_DISABLED
 
@@ -2188,7 +2189,7 @@ void main() {
 
 #ifdef USE_SHADOW_TO_OPACITY
 #ifndef MODE_RENDER_DEPTH
-	alpha = min(alpha, clamp(length(ambient_light), half(0.0), half(1.0)));
+	alpha = min(alpha, clamp(length(ambient_light_resulting), half(0.0), half(1.0)));
 
 #if defined(ALPHA_SCISSOR_USED)
 #ifdef MODE_RENDER_MATERIAL
@@ -2240,7 +2241,7 @@ void main() {
 
 	// apply metallic
 	diffuse_light *= half(1.0) - metallic;
-	ambient_light *= half(1.0) - metallic;
+	ambient_light_resulting *= half(1.0) - metallic;
 
 #ifdef MODE_MULTIPLE_RENDER_TARGETS
 
@@ -2253,7 +2254,7 @@ void main() {
 #ifdef SSS_MODE_SKIN
 	sss_strength = -sss_strength;
 #endif // SSS_MODE_SKIN
-	diffuse_buffer = vec4(emission + diffuse_light + ambient_light, sss_strength);
+	diffuse_buffer = vec4(emission + diffuse_light + ambient_light_resulting, sss_strength);
 	specular_buffer = vec4(direct_specular_light + indirect_specular_light, metallic);
 #endif // MODE_UNSHADED
 
@@ -2267,7 +2268,7 @@ void main() {
 #ifdef MODE_UNSHADED
 	hvec4 out_color = hvec4(albedo, alpha);
 #else // MODE_UNSHADED
-	hvec4 out_color = hvec4(emission + ambient_light + diffuse_light + direct_specular_light + indirect_specular_light, alpha);
+	hvec4 out_color = hvec4(emission + ambient_light_resulting + diffuse_light + direct_specular_light + indirect_specular_light, alpha);
 #endif // MODE_UNSHADED
 
 #ifndef FOG_DISABLED
