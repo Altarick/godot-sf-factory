@@ -1778,6 +1778,29 @@ Error GLTFDocument::_parse_meshes(Ref<GLTFState> p_state) {
 					}
 				}
 			}
+			
+			if (a.has("_CUSTOM3")) {
+				print_verbose("CUSTOM3 found");
+				PackedVector3Array custom_as_vector = _decode_accessor_as_vec3(p_state, a["_CUSTOM3"], indices_mapping);
+				PackedFloat32Array custom3;
+				custom3.resize(custom_as_vector.size()*3);
+				float* raw_values = custom3.ptrw();
+				for(int i = 0; i< custom_as_vector.size();i++)
+				{
+					print_verbose(custom_as_vector[i]);
+					raw_values[(i*3)+0] = custom_as_vector[i][0];
+					raw_values[(i*3)+1] = custom_as_vector[i][1];
+					raw_values[(i*3)+2] = custom_as_vector[i][2];
+				}
+
+				for(int i = 0; i< custom3.size();i++)
+				{
+					print_verbose(custom3[i]);
+				}
+				
+				array[Mesh::ARRAY_CUSTOM3] = custom3;
+				flags |= Mesh::ARRAY_CUSTOM_RGB_FLOAT << Mesh::ARRAY_FORMAT_CUSTOM3_SHIFT;
+			}
 
 			Array morphs;
 			// Blend shapes
