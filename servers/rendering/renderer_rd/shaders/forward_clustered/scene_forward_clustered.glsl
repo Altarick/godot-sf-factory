@@ -6,6 +6,9 @@
 
 /* Include half precision types. */
 #include "../half_inc.glsl"
+#include "../aesos.glsl"
+
+
 
 #include "scene_forward_clustered_inc.glsl"
 
@@ -446,6 +449,8 @@ void vertex_shader(vec3 vertex_input,
 	float point_size = 1.0;
 #endif
 
+
+
 	{
 #CODE : VERTEX
 	}
@@ -766,6 +771,7 @@ void _unpack_vertex_attributes(vec4 p_vertex_in, vec3 p_compressed_aabb_position
 #endif
 }
 
+
 void main() {
 	uint instance_index = draw_call.instance_index;
 	if (!sc_multimesh()) {
@@ -877,6 +883,7 @@ void main() {
 
 /* Include half precision types. */
 #include "../half_inc.glsl"
+#include "../aesos.glsl"
 
 #include "scene_forward_clustered_inc.glsl"
 

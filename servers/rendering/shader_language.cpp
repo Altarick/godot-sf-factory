@@ -3407,6 +3407,10 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
 	{ "fma", TYPE_VEC3, { TYPE_VEC3, TYPE_VEC3, TYPE_VEC3, TYPE_VOID }, { "a", "b", "c" }, TAG_GLOBAL, true },
 	{ "fma", TYPE_VEC4, { TYPE_VEC4, TYPE_VEC4, TYPE_VEC4, TYPE_VOID }, { "a", "b", "c" }, TAG_GLOBAL, true },
 
+	//Special Aesos functions
+	{ "decode_float_16", TYPE_UINT, { TYPE_FLOAT,TYPE_UINT,TYPE_UINT, TYPE_VOID  }, { "to_decode","start_bit","end_bit" }, TAG_GLOBAL, false },
+	{ "encode_float_16", TYPE_FLOAT, { TYPE_FLOAT,TYPE_UINT,TYPE_UINT,TYPE_UINT, TYPE_VOID  }, { "base","to_encode","start_bit","end_bit" }, TAG_GLOBAL, false },
+
 	// Packing/Unpacking functions.
 
 	{ "packHalf2x16", TYPE_UINT, { TYPE_VEC2, TYPE_VOID }, { "v" }, TAG_GLOBAL, false },
