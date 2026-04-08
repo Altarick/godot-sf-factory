@@ -158,6 +158,8 @@ vec4 volumetric_fog_process(vec2 screen_uv) {
 	return texture(sampler3D(volumetric_fog_texture, SAMPLER_LINEAR_CLAMP), fog_pos);
 }
 
+
+
 vec4 fog_process(vec3 view, vec3 sky_color) {
 	vec3 fog_color = mix(sky_scene_data.fog_light_color, sky_color, sky_scene_data.fog_aerial_perspective);
 
@@ -199,6 +201,7 @@ float atan2_approx(float y, float x) {
 
 	return r;
 }
+
 
 void main() {
 	vec2 uv = uv_interp * 0.5 + 0.5;
@@ -288,6 +291,7 @@ void main() {
 		vec4 fog = volumetric_fog_process(uv);
 		fog.rgb = frag_color.rgb * fog.a + fog.rgb;
 		frag_color.rgb = mix(frag_color.rgb, fog.rgb, sky_scene_data.volumetric_fog_sky_affect);
+		frag_color.a = sky_scene_data.volumetric_fog_sky_affect * (1.0-fog.a) ;
 	}
 
 	if (custom_fog.a > 0.0) {
@@ -299,12 +303,6 @@ void main() {
 	// For mobile renderer we're multiplying by 0.5 as we're using a UNORM buffer.
 	// For both mobile and clustered, we also bake in the exposure value for the environment and camera.
 	frag_color.rgb = frag_color.rgb * params.luminance_multiplier;
-
-	// Blending is disabled for Sky, so alpha doesn't blend.
-	// Alpha is used for subsurface scattering so make sure it doesn't get applied to Sky.
-	if (!AT_CUBEMAP_PASS && !AT_HALF_RES_PASS && !AT_QUARTER_RES_PASS) {
-		frag_color.a = 0.0;
-	}
 
 #ifdef USE_DEBANDING
 	frag_color.rgb += interleaved_gradient_noise(gl_FragCoord.xy) * params.luminance_multiplier;
