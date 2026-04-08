@@ -239,7 +239,7 @@ void main() {
 				emission *= clamp(density, 0.0, 1.0);
 				emission = clamp(emission, vec3(0.0), vec3(4.0));
 				// Scale to fit into R11G11B10 with a range of 0-4
-				uvec3 emission_u = uvec3(emission.r * 511.0, emission.g * 511.0, emission.b * 255.0);
+				uvec3 emission_u = uvec3(emission.r * 255.0, emission.g * 255.0, emission.b * 255.0);
 				// R and G have 11 bits each and B has 10. Then pack them into a 32 bit uint
 				uint final_emission = emission_u.r << 21 | emission_u.g << 10 | emission_u.b;
 #ifdef NO_IMAGE_ATOMICS
@@ -270,7 +270,7 @@ void main() {
 			{
 				vec3 scattering = albedo * clamp(density, 0.0, 1.0);
 				scattering = clamp(scattering, vec3(0.0), vec3(1.0));
-				uvec3 scattering_u = uvec3(scattering.r * 2047.0, scattering.g * 2047.0, scattering.b * 1023.0);
+				uvec3 scattering_u = uvec3(scattering.r * 1023.0, scattering.g * 1023.0, scattering.b * 1023.0);
 				// R and G have 11 bits each and B has 10. Then pack them into a 32 bit uint
 				uint final_scattering = scattering_u.r << 21 | scattering_u.g << 10 | scattering_u.b;
 #ifdef NO_IMAGE_ATOMICS
