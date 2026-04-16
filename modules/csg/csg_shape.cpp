@@ -81,6 +81,18 @@ void CSGShape3D::navmesh_parse_source_geometry(const Ref<NavigationMesh> &p_navi
 }
 #endif // NAVIGATION_3D_DISABLED
 
+void CSGShape3D::set_manual_update(bool p_enable) {
+	manual_update = p_enable;
+	if(!manual_update)
+	{
+		_make_dirty();
+	}
+}
+
+bool CSGShape3D::get_manual_update() const {
+	return manual_update;
+}
+
 #ifndef PHYSICS_3D_DISABLED
 void CSGShape3D::set_use_collision(bool p_enable) {
 	if (use_collision == p_enable) {
@@ -116,6 +128,7 @@ void CSGShape3D::set_use_collision(bool p_enable) {
 bool CSGShape3D::is_using_collision() const {
 	return use_collision;
 }
+
 
 void CSGShape3D::set_collision_layer(uint32_t p_layer) {
 	collision_layer = p_layer;
@@ -216,23 +229,33 @@ float CSGShape3D::get_snap() const {
 }
 #endif // DISABLE_DEPRECATED
 
+void CSGShape3D::mark_dirty()
+{
+	_update_forcing = true;
+	update_shape();
+}
+
+
 void CSGShape3D::_make_dirty(bool p_parent_removing) {
-#ifndef PHYSICS_3D_DISABLED
-	if ((p_parent_removing || is_root_shape()) && !dirty) {
-		callable_mp(this, &CSGShape3D::update_shape).call_deferred(); // Must be deferred; otherwise, is_root_shape() will use the previous parent.
-	}
-#endif // PHYSICS_3D_DISABLED
+	if(!manual_update)
+	{
+	#ifndef PHYSICS_3D_DISABLED
+		if ((p_parent_removing || is_root_shape()) && !dirty) {
+			callable_mp(this, &CSGShape3D::update_shape).call_deferred(); // Must be deferred; otherwise, is_root_shape() will use the previous parent.
+		}
+	#endif // PHYSICS_3D_DISABLED
 
-	if (!is_root_shape()) {
-		parent_shape->_make_dirty();
-	}
-#ifndef PHYSICS_3D_DISABLED
-	else if (!dirty) {
-		callable_mp(this, &CSGShape3D::update_shape).call_deferred();
-	}
-#endif // PHYSICS_3D_DISABLED
+		if (!is_root_shape()) {
+			parent_shape->_make_dirty();
+		}
+	#ifndef PHYSICS_3D_DISABLED
+		else if (!dirty) {
+			callable_mp(this, &CSGShape3D::update_shape).call_deferred();
+		}
+	#endif // PHYSICS_3D_DISABLED
 
-	dirty = true;
+		dirty = true;
+	}
 }
 
 enum ManifoldProperty {
@@ -451,12 +474,13 @@ struct ManifoldOperation {
 };
 
 CSGBrush *CSGShape3D::_get_brush() {
-	if (!dirty) {
+	if (!dirty && !_update_forcing) {
 		return brush;
 	}
 	if (brush) {
 		memdelete(brush);
 	}
+	_update_forcing = false;
 	brush = nullptr;
 	CSGBrush *n = _build_brush();
 	HashMap<int32_t, Ref<Material>> mesh_materials;
@@ -507,7 +531,7 @@ CSGBrush *CSGShape3D::_get_brush() {
 	node_aabb = aabb;
 	brush = n;
 	dirty = false;
-	update_configuration_warnings();
+	callable_mp((Node *)this, &Node3D::update_configuration_warnings).call_deferred();
 	return brush;
 }
 
@@ -569,7 +593,6 @@ void CSGShape3D::update_shape() {
 	if (!is_root_shape()) {
 		return;
 	}
-
 	set_base(RID());
 	root_mesh.unref(); //byebye root mesh
 
@@ -1000,6 +1023,9 @@ void CSGShape3D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_operation", "operation"), &CSGShape3D::set_operation);
 	ClassDB::bind_method(D_METHOD("get_operation"), &CSGShape3D::get_operation);
 
+	ClassDB::bind_method(D_METHOD("set_manual_update", "operation"), &CSGShape3D::set_manual_update);
+	ClassDB::bind_method(D_METHOD("get_manual_update"), &CSGShape3D::get_manual_update);
+
 #ifndef DISABLE_DEPRECATED
 	ClassDB::bind_method(D_METHOD("_update_shape"), &CSGShape3D::update_shape);
 	ClassDB::bind_method(D_METHOD("set_snap", "snap"), &CSGShape3D::set_snap);
@@ -1036,12 +1062,15 @@ void CSGShape3D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_meshes"), &CSGShape3D::get_meshes);
 
 	ClassDB::bind_method(D_METHOD("bake_static_mesh"), &CSGShape3D::bake_static_mesh);
+	ClassDB::bind_method(D_METHOD("mark_dirty"), &CSGShape3D::mark_dirty);
+
 
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "operation", PROPERTY_HINT_ENUM, "Union,Intersection,Subtraction"), "set_operation", "get_operation");
 #ifndef DISABLE_DEPRECATED
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "snap", PROPERTY_HINT_RANGE, "0.000001,1,0.000001,suffix:m", PROPERTY_USAGE_NONE), "set_snap", "get_snap");
 #endif // DISABLE_DEPRECATED
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "calculate_tangents"), "set_calculate_tangents", "is_calculating_tangents");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "manual_update"), "set_manual_update", "get_manual_update");
 
 #ifndef PHYSICS_3D_DISABLED
 	ADD_GROUP("Collision", "collision_");

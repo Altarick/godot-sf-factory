@@ -66,6 +66,8 @@ private:
 	bool dirty = false;
 	bool last_visible = false;
 	float snap = 0.001;
+	bool manual_update = false;
+	bool _update_forcing = false;
 
 #ifndef PHYSICS_3D_DISABLED
 	bool use_collision = false;
@@ -141,6 +143,9 @@ public:
 	void set_use_collision(bool p_enable);
 	bool is_using_collision() const;
 
+	void set_manual_update(bool p_enable);
+	bool get_manual_update() const;
+
 	void set_collision_layer(uint32_t p_layer);
 	uint32_t get_collision_layer() const;
 
@@ -157,6 +162,8 @@ public:
 
 	void set_collision_priority(real_t p_priority);
 	real_t get_collision_priority() const;
+
+	void mark_dirty();
 
 #ifndef DISABLE_DEPRECATED
 	void set_snap(float p_snap);
