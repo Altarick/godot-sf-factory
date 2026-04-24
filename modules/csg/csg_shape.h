@@ -163,8 +163,7 @@ public:
 	void set_collision_priority(real_t p_priority);
 	real_t get_collision_priority() const;
 
-	void mark_dirty();
-
+	void trigger_update();
 #ifndef DISABLE_DEPRECATED
 	void set_snap(float p_snap);
 	float get_snap() const;

@@ -229,7 +229,7 @@ float CSGShape3D::get_snap() const {
 }
 #endif // DISABLE_DEPRECATED
 
-void CSGShape3D::mark_dirty()
+void CSGShape3D::trigger_update()
 {
 	_update_forcing = true;
 	update_shape();
@@ -1062,7 +1062,7 @@ void CSGShape3D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_meshes"), &CSGShape3D::get_meshes);
 
 	ClassDB::bind_method(D_METHOD("bake_static_mesh"), &CSGShape3D::bake_static_mesh);
-	ClassDB::bind_method(D_METHOD("mark_dirty"), &CSGShape3D::mark_dirty);
+	ClassDB::bind_method(D_METHOD("trigger_update"), &CSGShape3D::trigger_update);
 
 
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "operation", PROPERTY_HINT_ENUM, "Union,Intersection,Subtraction"), "set_operation", "get_operation");
